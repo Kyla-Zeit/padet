@@ -1,6 +1,5 @@
 const isProd = process.env.NODE_ENV === 'production'
 const repo = 'padet'
-
 export default {
   output: 'export',
   images: { unoptimized: true },
