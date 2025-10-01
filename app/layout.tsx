@@ -1,5 +1,6 @@
 // app/layout.tsx
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kyla-zeit.github.io/padet"),
@@ -15,14 +16,7 @@ export const metadata: Metadata = {
       "Programs and partnerships improving the lives of children, youth, and women across Ethiopia.",
     url: "https://kyla-zeit.github.io/padet/",
     siteName: "PADet",
-    images: [
-      {
-        url: "https://kyla-zeit.github.io/padet/og.jpg", // put an image in /public/og.jpg
-        width: 1200,
-        height: 630,
-        alt: "PADet",
-      },
-    ],
+    images: [{ url: "/og.jpg", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {
@@ -30,9 +24,17 @@ export const metadata: Metadata = {
     title: "PADet",
     description:
       "Programs and partnerships improving the lives of children, youth, and women across Ethiopia.",
-    images: ["https://kyla-zeit.github.io/padet/og.jpg"],
+    images: ["/og.jpg"],
   },
-  icons: {
-    icon: "/favicon.ico", // add /public/favicon.ico
-  },
+  icons: { icon: "/favicon.ico" },
 };
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
