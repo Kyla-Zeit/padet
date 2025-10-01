@@ -1,26 +1,38 @@
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+// app/layout.tsx
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  return (
-    <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  )
-}
+  metadataBase: new URL("https://kyla-zeit.github.io/padet"),
+  title: {
+    default: "PADet — Professional Alliance for Development Ethiopia",
+    template: "%s | PADet",
+  },
+  description:
+    "Programs and partnerships improving the lives of children, youth, and women across Ethiopia.",
+  openGraph: {
+    title: "PADet — Professional Alliance for Development Ethiopia",
+    description:
+      "Programs and partnerships improving the lives of children, youth, and women across Ethiopia.",
+    url: "https://kyla-zeit.github.io/padet/",
+    siteName: "PADet",
+    images: [
+      {
+        url: "https://kyla-zeit.github.io/padet/og.jpg", // put an image in /public/og.jpg
+        width: 1200,
+        height: 630,
+        alt: "PADet",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PADet",
+    description:
+      "Programs and partnerships improving the lives of children, youth, and women across Ethiopia.",
+    images: ["https://kyla-zeit.github.io/padet/og.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico", // add /public/favicon.ico
+  },
+};
