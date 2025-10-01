@@ -1,26 +1,70 @@
+// app/page.tsx
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Users, Heart, Shield, Sprout, Globe, ArrowRight, Mail, Phone, MapPin, Menu } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
-// static imports so GH Pages basePath works
+// Static imports so GitHub Pages basePath works
 import heroImg from "@/public/ethiopian-children-and-families-in-community-devel.jpg"
 import aboutImg from "@/public/ethiopian-women-in-community-meeting-discussing-de.jpg"
+
+// Nav config to mirror padet.org
+const NAV = [
+  { label: "About", href: "#about" },
+  { label: "Publications", href: "https://padet.org/publications/", external: true },
+  { label: "News", href: "https://padet.org/news/", external: true },
+  { label: "Contact", href: "#contact" },
+]
+
+const ANNOUNCEMENTS = [
+  { label: "Bid", href: "https://padet.org/bids/", external: true },
+  { label: "Vacancy", href: "https://padet.org/vacancy/", external: true },
+]
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* NAV */}
       <nav className="fixed top-0 w-full bg-background/90 backdrop-blur-2xl border-b border-border/20 z-50">
         <div className="max-w-8xl mx-auto px-8 lg:px-12">
           <div className="flex justify-between items-center h-32">
             <div className="text-3xl font-serif font-extralight tracking-wider text-primary">PADet</div>
-            <div className="hidden md:flex items-center space-x-16 text-sm font-extralight">
-              <Link href="#about" className="text-muted-foreground hover:text-primary transition-colors duration-500">About</Link>
-              <Link href="#programs" className="text-muted-foreground hover:text-primary transition-colors duration-500">Programs</Link>
-              <Link href="#impact" className="text-muted-foreground hover:text-primary transition-colors duration-500">Impact</Link>
-              <Link href="#contact" className="text-muted-foreground hover:text-primary transition-colors duration-500">Contact</Link>
+
+            <div className="hidden md:flex items-center gap-10 text-sm font-extralight">
+              {NAV.map(item => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="text-muted-foreground hover:text-primary transition-colors duration-500"
+                >
+                  {item.label}
+                </Link>
+              ))}
+
+              {/* Announcements dropdown */}
+              <div className="relative group">
+                <button className="text-muted-foreground hover:text-primary transition-colors duration-500">
+                  Announcements
+                </button>
+                <div className="absolute right-0 mt-3 hidden group-hover:block bg-background border border-border/30 shadow-lg min-w-40">
+                  {ANNOUNCEMENTS.map(a => (
+                    <Link
+                      key={a.label}
+                      href={a.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-4 py-2 whitespace-nowrap hover:bg-secondary/40"
+                    >
+                      {a.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
+
+            {/* mobile button (no menu wired yet) */}
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />
             </Button>
@@ -46,7 +90,8 @@ export default function HomePage() {
           <div className="space-y-16">
             <div className="accent-line w-32 mx-auto bg-white/40" />
             <h1 className="hero-text text-balance">
-              EMPOWERING<br />
+              EMPOWERING
+              <br />
               <span className="italic font-extralight opacity-90">Communities</span>
             </h1>
             <p className="text-2xl font-extralight max-w-3xl mx-auto leading-relaxed opacity-80">
@@ -60,26 +105,18 @@ export default function HomePage() {
       <section className="py-48">
         <div className="max-w-8xl mx-auto px-8 lg:px-12">
           <div className="museum-grid gap-24">
-            <div className="col-span-12 lg:col-span-3 text-center space-y-8">
-              <div className="display-text text-primary">4.4M+</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-[0.3em] font-extralight">Lives Transformed</div>
-              <div className="accent-line w-24 mx-auto" />
-            </div>
-            <div className="col-span-12 lg:col-span-3 text-center space-y-8">
-              <div className="display-text text-primary">2.5M+</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-[0.3em] font-extralight">Women Empowered</div>
-              <div className="accent-line w-24 mx-auto" />
-            </div>
-            <div className="col-span-12 lg:col-span-3 text-center space-y-8">
-              <div className="display-text text-primary">1.6M+</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-[0.3em] font-extralight">Children Protected</div>
-              <div className="accent-line w-24 mx-auto" />
-            </div>
-            <div className="col-span-12 lg:col-span-3 text-center space-y-8">
-              <div className="display-text text-primary">25</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-[0.3em] font-extralight">Years of Impact</div>
-              <div className="accent-line w-24 mx-auto" />
-            </div>
+            {[
+              ["4.4M+", "Lives Transformed"],
+              ["2.5M+", "Women Empowered"],
+              ["1.6M+", "Children Protected"],
+              ["25", "Years of Impact"],
+            ].map(([n, label]) => (
+              <div key={label} className="col-span-12 lg:col-span-3 text-center space-y-8">
+                <div className="display-text text-primary">{n}</div>
+                <div className="text-xs text-muted-foreground uppercase tracking-[0.3em] font-extralight">{label}</div>
+                <div className="accent-line w-24 mx-auto" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -94,7 +131,8 @@ export default function HomePage() {
             <div className="col-span-12 lg:col-span-5 space-y-12">
               <div className="accent-line w-32" />
               <h2 className="display-text text-balance text-primary">
-                Building Sustainable<br />
+                Building Sustainable
+                <br />
                 <span className="italic font-extralight opacity-90">Futures</span>
               </h2>
               <p className="text-xl text-muted-foreground leading-relaxed font-extralight max-w-lg">
@@ -117,8 +155,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PROGRAMS */}
-      <section id="programs" className="py-48">
+      {/* PROGRAM CARDS (kept on page even though not in header) */}
+      <section className="py-48">
         <div className="max-w-8xl mx-auto px-8 lg:px-12">
           <div className="museum-grid mb-32">
             <div className="col-span-12 lg:col-span-1">
@@ -127,7 +165,9 @@ export default function HomePage() {
             <div className="col-span-12 lg:col-span-7 space-y-12">
               <div className="accent-line w-32" />
               <h2 className="display-text text-balance text-primary">
-                Our Program<br /><span className="italic font-extralight opacity-90">Areas</span>
+                Our Program
+                <br />
+                <span className="italic font-extralight opacity-90">Areas</span>
               </h2>
             </div>
           </div>
@@ -136,7 +176,7 @@ export default function HomePage() {
             <Card className="col-span-12 lg:col-span-6 bg-transparent border-border/20 hover-lift rounded-none overflow-hidden">
               <CardContent className="p-16 space-y-8">
                 <Heart className="h-6 w-6 text-primary opacity-60" />
-                <h3 className="text-3xl font-serif font-extralight text-primary">Sexual & Reproductive Health</h3>
+                <h3 className="text-3xl font-serif font-extralight text-primary">Sexual &amp; Reproductive Health</h3>
                 <p className="text-muted-foreground leading-relaxed font-extralight text-lg">
                   Comprehensive programs addressing HIV/AIDS prevention, family planning, and reproductive health
                   education across Ethiopian communities.
@@ -188,18 +228,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* IMPACT placeholder */}
-      <section id="impact" className="py-48 bg-secondary/10">
-        <div className="max-w-8xl mx-auto px-8 lg:px-12">
-          <div className="accent-line w-32 mb-10" />
-          <h2 className="display-text text-primary mb-8">Impact</h2>
-          <p className="text-muted-foreground max-w-3xl">
-            Outcome stories, numbers, and partner spotlights go here.
-          </p>
-        </div>
-      </section>
-
-      {/* FOOTER */}
+      {/* FOOTER / CONTACT */}
       <footer id="contact" className="py-32 border-t border-border/20">
         <div className="max-w-8xl mx-auto px-8 lg:px-12">
           <div className="museum-grid">
@@ -232,9 +261,9 @@ export default function HomePage() {
             <div className="col-span-12 lg:col-span-2 space-y-8">
               <h3 className="font-serif text-xl text-primary font-extralight">Contact</h3>
               <div className="space-y-4 text-muted-foreground font-extralight">
-                <div className="flex items-center space-x-3"><MapPin className="h-4 w-4 opacity-60" /><span>Addis Ababa, Ethiopia</span></div>
-                <div className="flex items-center space-x-3"><Mail className="h-4 w-4 opacity-60" /><span>info@padet.org</span></div>
-                <div className="flex items-center space-x-3"><Phone className="h-4 w-4 opacity-60" /><span>+251 11 XXX XXXX</span></div>
+                <div className="flex items-center gap-3"><MapPin className="h-4 w-4 opacity-60" /><span>Addis Ababa, Ethiopia</span></div>
+                <div className="flex items-center gap-3"><Mail className="h-4 w-4 opacity-60" /><span>info@padet.org</span></div>
+                <div className="flex items-center gap-3"><Phone className="h-4 w-4 opacity-60" /><span>+251 11 XXX XXXX</span></div>
               </div>
             </div>
           </div>
